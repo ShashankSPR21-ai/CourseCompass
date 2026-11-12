@@ -1,0 +1,558 @@
+/* ==========================================================================
+   CourseCompass – unified theme & responsive layer
+   Loaded AFTER every component stylesheet (see main.jsx), so it harmonises
+   the student, coordinator and admin portals and fixes small-screen layouts.
+   ========================================================================== */
+
+:root {
+  --ui-primary: #4f46e5;
+  --ui-primary-hover: #4338ca;
+  --ui-primary-soft: #eef0ff;
+  --ui-ink: #0f172a;
+  --ui-text: #1e293b;
+  --ui-muted: #64748b;
+  --ui-line: #e2e8f0;
+  --ui-surface: #ffffff;
+  --ui-bg: #f5f7fb;
+  --ui-success: #16a34a;
+  --ui-warn: #d97706;
+  --ui-danger: #dc2626;
+  --ui-radius: 14px;
+  --ui-radius-sm: 10px;
+  --ui-shadow-sm: 0 1px 2px rgba(15, 23, 42, .05), 0 1px 3px rgba(15, 23, 42, .06);
+  --ui-shadow-md: 0 8px 24px rgba(15, 23, 42, .08);
+  --ui-font: 'Inter', 'DM Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --ui-tap: 44px;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--ui-font);
+  background: var(--ui-bg);
+  color: var(--ui-text);
+  overflow-x: hidden;
+}
+
+img, svg, video, canvas {
+  max-width: 100%;
+}
+
+h1, h2, h3, h4 {
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+/* ---------- Focus & selection ------------------------------------------- */
+
+:where(button, a, input, select, textarea, [tabindex]):focus-visible {
+  outline: 3px solid rgba(79, 70, 229, .45);
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+/* ---------- Form controls (all portals) --------------------------------- */
+
+:where(input:not([type='checkbox']):not([type='radio']):not([type='file']),
+       select, textarea) {
+  font-family: var(--ui-font);
+  color: var(--ui-ink);
+  border: 1px solid #cbd5e1;
+  border-radius: var(--ui-radius-sm);
+  background-color: #fff;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+
+:where(input, select, textarea):hover {
+  border-color: #94a3b8;
+}
+
+:where(input, select, textarea):focus {
+  outline: none;
+  border-color: var(--ui-primary);
+  box-shadow: 0 0 0 4px rgba(79, 70, 229, .14);
+}
+
+:where(input, textarea)::placeholder {
+  color: #94a3b8;
+}
+
+:where(input:disabled, select:disabled, textarea:disabled) {
+  background: #f1f5f9;
+  color: var(--ui-muted);
+  cursor: not-allowed;
+}
+
+/* Consistent, branded native selects */
+select {
+  -webkit-appearance: none;
+  appearance: none;
+  padding-right: 38px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px;
+}
+
+select,
+.admin-page select,
+.admin-filters select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 12px center !important;
+  background-size: 16px !important;
+}
+
+input[type='checkbox'],
+input[type='radio'] {
+  accent-color: var(--ui-primary);
+  width: 17px;
+  height: 17px;
+}
+
+input[type='file'] {
+  max-width: 100%;
+  font-size: 13px;
+}
+
+input[type='file']::file-selector-button {
+  margin-right: 12px;
+  padding: 9px 14px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--ui-primary-soft);
+  color: var(--ui-primary);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* ---------- Buttons ----------------------------------------------------- */
+
+:where(button) {
+  font-family: var(--ui-font);
+  font-weight: 600;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+.cc-primary-btn,
+.cc-secondary-btn,
+.cc-text-btn {
+  transition: background .18s ease, border-color .18s ease,
+    box-shadow .18s ease, transform .18s ease;
+}
+
+/* ==========================================================================
+   STUDENT PORTAL
+   ========================================================================== */
+
+.cc-dashboard {
+  font-family: var(--ui-font);
+}
+
+/* Normalise sidebar navigation – same size/weight/alignment on every row */
+.cc-side-nav button {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: left;
+  line-height: 1.2;
+}
+
+.cc-side-nav button > :first-child {
+  width: 20px;
+  flex: 0 0 20px;
+  text-align: center;
+}
+
+.cc-side-nav .cc-nav-count {
+  margin-left: auto;
+}
+
+/* Page action row + hero buttons: never touching, always wrap neatly */
+.cc-dashboard-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 14px;
+}
+
+.cc-welcome-copy .cc-primary-btn,
+.cc-welcome-copy .cc-secondary-btn {
+  margin: 0;
+}
+
+.cc-welcome-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.cc-welcome-copy > div:last-child {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* "Next step" promo rows: icon · text · button, evenly aligned */
+.cc-next-step {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 18px;
+}
+
+.cc-next-step > div:nth-child(2) {
+  text-align: left;
+  min-width: 0;
+}
+
+/* Cards: unify radius + hover lift */
+.cc-stat-card,
+.cc-next-step {
+  border-radius: var(--ui-radius);
+}
+
+@media (hover: hover) {
+  .cc-stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--ui-shadow-md);
+  }
+}
+
+.cc-stat-card {
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+/* ==========================================================================
+   COORDINATOR PORTAL
+   ========================================================================== */
+
+/* Overview KPI cards: use an even grid instead of loose auto-fit */
+.cc-kpi-grid {
+  gap: 16px !important;
+  margin-bottom: 22px;
+}
+
+.cc-kpi-grid .cc-kpi-card {
+  margin-bottom: 0 !important;
+  border: 1px solid var(--ui-line);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+@media (hover: hover) {
+  .cc-kpi-grid .cc-kpi-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--ui-shadow-md) !important;
+  }
+}
+
+.coordinator-dashboard h1,
+.coordinator-dashboard h2,
+.coordinator-dashboard h3 {
+  font-family: var(--ui-font);
+}
+
+.coordinator-dashboard table {
+  font-size: 13.5px;
+}
+
+.coordinator-dashboard th {
+  background: #f8fafc;
+  color: var(--ui-muted);
+  font-size: 11.5px !important;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.coordinator-dashboard tbody tr:hover td {
+  background: #fafbff;
+}
+
+/* ==========================================================================
+   ADMIN PORTAL
+   ========================================================================== */
+
+.admin-table {
+  font-size: 13px;
+}
+
+.admin-table th {
+  white-space: nowrap;
+}
+
+.admin-table td small {
+  word-break: break-word;
+}
+
+/* Keep wide admin tables readable: scroll horizontally, don't crush columns */
+.admin-table-wrapper {
+  -webkit-overflow-scrolling: touch;
+  background: #fff;
+}
+
+.admin-table {
+  min-width: 720px;
+}
+
+/* ==========================================================================
+   RESPONSIVE – tablet
+   ========================================================================== */
+
+@media (max-width: 1024px) {
+  .cc-next-step {
+    gap: 14px;
+  }
+}
+
+/* ==========================================================================
+   RESPONSIVE – phones & small tablets
+   ========================================================================== */
+
+@media (max-width: 760px) {
+  /* 16px inputs stop iOS from zooming on focus; 44px = comfortable tap target */
+  input:not([type='checkbox']):not([type='radio']):not([type='file']),
+  select,
+  textarea {
+    font-size: 16px !important;
+    min-height: var(--ui-tap);
+  }
+
+  button {
+    min-height: 40px;
+  }
+
+  /* ---- Student -------------------------------------------------------- */
+  .cc-topbar {
+    gap: 10px;
+  }
+
+  .cc-breadcrumb {
+    display: none;
+  }
+
+  .cc-topbar-actions {
+    width: 100%;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .cc-user-chip {
+    min-width: 0;
+  }
+
+  .cc-user-chip-name {
+    max-width: 130px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .cc-side-nav {
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .cc-side-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .cc-side-nav button {
+    scroll-snap-align: start;
+    white-space: nowrap;
+    font-size: 12.5px;
+  }
+
+  .cc-dashboard-actions {
+    justify-content: stretch;
+  }
+
+  .cc-dashboard-actions .cc-secondary-btn {
+    width: 100%;
+  }
+
+  .cc-welcome-art {
+    display: none !important;
+  }
+
+  .cc-welcome-copy > div:last-child {
+    width: 100%;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .cc-welcome-copy .cc-primary-btn,
+  .cc-welcome-copy .cc-secondary-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .cc-next-step {
+    grid-template-columns: auto 1fr;
+    align-items: start;
+  }
+
+  .cc-next-step > .cc-secondary-btn,
+  .cc-next-step > button {
+    grid-column: 1 / -1;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .cc-stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 12px !important;
+  }
+
+  /* ---- Coordinator ---------------------------------------------------- */
+  .coordinator-dashboard nav {
+    margin-bottom: 18px !important;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .coordinator-dashboard nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .coordinator-dashboard nav button {
+    white-space: nowrap;
+  }
+
+  .cc-kpi-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 12px !important;
+  }
+
+  .cc-kpi-card {
+    padding: 14px !important;
+    margin-bottom: 0 !important;
+    min-width: 0;
+  }
+
+  .cc-kpi-card .cc-kpi-icon {
+    font-size: 22px !important;
+  }
+
+  .cc-kpi-card p {
+    font-size: 12.5px;
+    margin: 4px 0 2px !important;
+  }
+
+  .cc-kpi-card h2 {
+    font-size: 26px !important;
+  }
+
+  .coordinator-dashboard main h1 {
+    font-size: 24px !important;
+  }
+
+  /* Form grids collapse to a single comfortable column */
+  .coordinator-dashboard div[style*='repeat(auto-fit']:not([class]) {
+    grid-template-columns: 1fr !important;
+  }
+
+  .coordinator-dashboard button[type='submit'],
+  .coordinator-dashboard form > button {
+    width: 100%;
+  }
+
+  /* ---- Admin ---------------------------------------------------------- */
+  .admin-table {
+    min-width: 640px;
+  }
+
+  .admin-table td,
+  .admin-table th {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+}
+
+@media (max-width: 420px) {
+  .cc-stats-grid {
+    gap: 10px !important;
+  }
+
+  .cc-next-step {
+    padding: 16px !important;
+  }
+
+  .coordinator-dashboard main {
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+  }
+}
+
+/* ---------- Safe areas for notched phones -------------------------------- */
+@supports (padding: max(0px)) {
+  body {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+}
+
+@media print {
+  .cc-sidebar, .cc-topbar, nav { display: none !important; }
+}
+
+/* ---------- Approval workflow: never let review cards outgrow the screen -- */
+.wf-review-list {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.wf-review,
+.wf-review-head > *,
+.wf-banner > * {
+  min-width: 0;
+}
+
+.wf-review .admin-table-wrapper {
+  max-width: 100%;
+}
+
+@media (max-width: 760px) {
+  .wf-review {
+    padding: 14px;
+  }
+
+  .wf-review-actions button {
+    width: 100%;
+  }
+}
+
+/* Photo upload tiles: stay centred even inside the coordinator portal's label rules */
+.coordinator-dashboard .wf-photo-add {
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.coordinator-dashboard .wf-photo-add:hover {
+  transform: none;
+}
+
+@media (max-width: 760px) {
+  .wf-photo-grid {
+    gap: 10px;
+  }
+}
+
+.wf-review-head .wf-pill {
+  align-self: flex-start;
+  height: fit-content;
+}
